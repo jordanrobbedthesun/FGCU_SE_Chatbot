@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Animated, ScrollView, TextInp
 import axios from 'axios';
 
 // Constants for API
-const API_URL = 'http://10.0.2.2:3000/home/chatbot'; // Replace with your backend IP
+const API_URL = 'http://localhost:3000/home/chatbot'; // Replace with your backend IP
 
 const HomeView = () => {
   const [isChatExpanded, setIsChatExpanded] = useState(false);
@@ -44,7 +44,6 @@ const HomeView = () => {
       try {
         // Make API call to the backend
         const response = await axios.post(API_URL, {
-          stockSymbol: 'null', // Example stock symbol, replace as needed
           userMessage: userMessage,
         });
 
@@ -113,7 +112,7 @@ const HomeView = () => {
       {!isChatExpanded ? (
         <ChatBox />
       ) : (
-        <TouchableOpacity style={styles.fullScreenOverlay} onPress={() => setIsChatExpanded(false)}>
+        <TouchableOpacity style={styles.fullScreenOverlay} onPress={() => setIsChatExpanded(true)}>
           <FullScreenChatView />
         </TouchableOpacity>
       )}
