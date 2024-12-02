@@ -13,7 +13,7 @@ let fgcuData = [];
 const loadCSVData = () => {
      return new Promise((resolve, reject) => {
           const data = [];
-          fs.createReadStream('./schedule_data.csv') // Assuming the CSV file is in the same directory
+          fs.createReadStream('../backend/csv/schedule_data.csv') // Assuming the CSV file is in the same directory
                .pipe(csv())
                .on('data', (row) => {
                     data.push(row);
