@@ -51,7 +51,7 @@ const FullScreenChatView = ({ messages, inputValue, setInputValue, sendMessage }
           style={styles.caleb}
         />
         <Image
-          source={require('../../assets/images/chad.png')}
+          source={require('../../assets/images/cakeCabes.png')}
           style={styles.caleb}
         />
         <Image
