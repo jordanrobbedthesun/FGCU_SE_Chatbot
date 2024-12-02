@@ -1,14 +1,84 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, ScrollView, TextInput, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, ScrollView, TextInput, Button, Image } from 'react-native';
 import axios from 'axios';
 
 // Constants for API
 const API_URL = 'http://localhost:3000/home/chatbot'; // Replace with your backend IP
 
+// ChatBox Component
+const ChatBox = ({ isChatExpanded, setIsChatExpanded, fullScreenChatView }) => (
+  <View style={styles.chatbotContainer}>
+    {!isChatExpanded ? (
+      <TouchableOpacity style={styles.chatButton} onPress={() => setIsChatExpanded(true)}>
+        <Text style={styles.chatButtonText}>💬 Chat with me!</Text>
+      </TouchableOpacity>
+    ) : (
+      fullScreenChatView()
+    )}
+  </View>
+);
+
+// FullScreenChatView Component
+const FullScreenChatView = ({ messages, inputValue, setInputValue, sendMessage }) => {
+  // Check if messages is an array
+  if (!messages || !Array.isArray(messages)) {
+    return <Text>Loading messages...</Text>; // Display a loading message or handle empty state
+  }
+
+  return (
+    <View style={styles.fullScreenChatView}>
+      <ScrollView style={styles.chatMessages} keyboardShouldPersistTaps="handled">
+        {messages.length === 0 ? (
+          <Text style={styles.noMessagesText}>No messages yet. Start chatting!</Text>
+        ) : (
+          messages.map((msg, index) => (
+            <View
+              key={index}
+              style={[
+                styles.messageContainer,
+                msg.sender === 'User' ? styles.userContainer : styles.aiContainer,
+              ]}
+            >
+              {msg.sender === 'FGCU' && (
+                <Image
+                  source={require('../../assets/images/chad.png')} // Chatbot image
+                  style={styles.avatar}
+                />
+              )}
+              {msg.sender === 'User' && (
+                <Image
+                  source={require('../../assets/images/caleb.png')} // User image (or different image if you want)
+                  style={styles.avatar}
+                />
+              )}
+              <Text style={msg.sender === 'User' ? styles.userMessage : styles.aiMessage}>
+                {msg.text}
+              </Text>
+            </View>
+          ))
+        )}
+      </ScrollView>
+
+      <View style={styles.messageInputContainer}>
+        <TextInput
+          style={styles.messageInput}
+          placeholder="Ask me a question about FGCU SE/CS..."
+          placeholderTextColor="#666"
+          value={inputValue}
+          onChangeText={setInputValue}
+          onSubmitEditing={sendMessage}
+        />
+        <Button title="Send" color="#004785" onPress={sendMessage} />
+      </View>
+    </View>
+  );
+};
+
+// Main HomeView Component
 const HomeView = () => {
-  const [isChatExpanded, setIsChatExpanded] = useState(false);
-  const [messages, setMessages] = useState([]); // State to hold chat messages
-  const [inputValue, setInputValue] = useState(''); // State to hold user input
+  const [isChatExpanded, setIsChatExpanded] = useState(true);
+  const [messages, setMessages] = useState([]); // Initialize messages as an empty array
+  const [inputValue, setInputValue] = useState('');
   const bounceAnimation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -27,93 +97,60 @@ const HomeView = () => {
       ])
     );
 
-    // Start bouncing animation
     bounce.start();
-
-    // Stop animation when chat is expanded
     return () => bounce.stop();
   }, [bounceAnimation]);
 
   const sendMessage = async () => {
     if (inputValue.trim()) {
-      // Add user message
-      const userMessage = inputValue;
-      setMessages((prevMessages) => [...prevMessages, { text: userMessage, sender: 'User' }]);
-      setInputValue(''); // Clear input
+      setMessages((prevMessages) => [...prevMessages, { text: inputValue, sender: 'User' }]);
+      setInputValue('');
 
       try {
-        // Make API call to the backend
         const response = await axios.post(API_URL, {
-          userMessage: userMessage,
+          userMessage: inputValue,
         });
 
-        console.log("Response from server:", response.data); // Log the full response
-
-        // Check if advice is an object and extract the relevant text
-        const advice = response.data.advice.result; // Assuming 'result' is the key you want to display
-        if (advice) {
-          // Add AI response to the chat
-          setMessages((prevMessages) => [...prevMessages, { text: advice, sender: 'FGCU SE Chatbot' }]);
+        const botMessage = response.data.advice.result;
+        if (botMessage) {
+          setMessages((prevMessages) => [...prevMessages, { text: botMessage, sender: 'FGCU' }]);
         } else {
-          setMessages((prevMessages) => [...prevMessages, { text: 'No advice received from server.', sender: 'FGCU SE Chatbot' }]);
+          setMessages((prevMessages) => [...prevMessages, { text: 'No advice received from server.', sender: 'FGCU' }]);
         }
       } catch (error) {
         console.error('Error sending message:', error);
-        setMessages((prevMessages) => [...prevMessages, { text: 'Error getting advice. Please try again.', sender: 'FGCU SE Chatbot' }]);
+        setMessages((prevMessages) => [...prevMessages, { text: 'Error getting advice. Please try again.', sender: 'FGCU' }]);
       }
     }
   };
 
-  const ChatBox = () => (
-    <TouchableOpacity style={styles.chatBox} onPress={() => setIsChatExpanded(true)}>
-      <Animated.View style={{ transform: [{ translateY: bounceAnimation }] }}>
-        <View style={styles.chatBubble}>
-          <Text style={styles.chatEmoji}>💬</Text>
-        </View>
-        <Text style={styles.chatText}>Ask me a question...</Text>
-      </Animated.View>
-    </TouchableOpacity>
-  );
-
-  const FullScreenChatView = () => (
-    <View style={styles.fullScreenChatView}>
-      <ScrollView style={styles.chatMessages}>
-        {messages.length === 0 ? (
-          <Text style={styles.noMessagesText}>No messages yet. Start chatting!</Text>
-        ) : (
-          messages.map((msg, index) => (
-            <Text key={index} style={msg.sender === 'User' ? styles.userMessage : styles.aiMessage}>
-              {msg.sender}: {msg.text}
-            </Text>
-          ))
-        )}
-      </ScrollView>
-
-      <View style={styles.messageInputContainer}>
-        <TextInput
-          style={styles.messageInput}
-          placeholder="Ask me a question about FGCU SE/CS..."
-          placeholderTextColor="#666"
-          value={inputValue}
-          onChangeText={setInputValue}
-          onSubmitEditing={sendMessage} // Send message on enter key press
-        />
-        <Button title="Send" color="#004785" onPress={sendMessage} />
-      </View>
-    </View>
-  );
-
   return (
     <View style={styles.container}>
       <View style={styles.hero}>
-        <Text style={styles.aiHeader}>FGCU SE Chatbot</Text>
+        <Text style={styles.aiHeader}>FGCU SE/CS Chatbot</Text>
         <Text style={styles.aiSubHeader}>Your Personal Academic Advisor</Text>
       </View>
       {!isChatExpanded ? (
-        <ChatBox />
+        <ChatBox
+          isChatExpanded={isChatExpanded}
+          setIsChatExpanded={setIsChatExpanded}
+          fullScreenChatView={() => (
+            <FullScreenChatView
+              messages={messages}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+              sendMessage={sendMessage}
+            />
+          )}
+        />
       ) : (
         <TouchableOpacity style={styles.fullScreenOverlay} onPress={() => setIsChatExpanded(true)}>
-          <FullScreenChatView />
+          <FullScreenChatView
+            messages={messages}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            sendMessage={sendMessage}
+          />
         </TouchableOpacity>
       )}
     </View>
@@ -123,7 +160,7 @@ const HomeView = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#004785', // Classic blue background
+    backgroundColor: '#004785',
     padding: 20,
   },
   hero: {
@@ -131,45 +168,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   aiHeader: {
-    fontSize: 30, // Increased font size for header
-    fontWeight: 'bold', // Bold for header
-    color: 'white', // White text color for header
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
   },
   aiSubHeader: {
-    fontSize: 16, // Decreased font size for subheader
-    fontWeight: 'normal', // Unbolded subheader
-    color: 'white', // White text color for subheader
+    fontSize: 16,
+    color: 'white',
   },
-  chatBox: {
-    backgroundColor: 'white', // White background for chat box
-    borderRadius: 10,
-    padding: 20, // Increased padding for a bigger touchable area
+  chatbotContainer: {
     alignItems: 'center',
-    marginTop: 20, // Add some margin to separate from header
-    elevation: 5, // Added elevation for shadow effect
+    marginTop: 20,
+  },
+  chatButton: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    elevation: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
   },
-  chatBubble: {
-    backgroundColor: '#e1e1e1', // Light gray for chat bubble
-    borderRadius: 15,
-    padding: 10,
-  },
-  chatEmoji: {
-    fontSize: 30,
-  },
-  chatText: {
-    marginTop: 5,
-    fontSize: 14,
+  chatButtonText: {
+    fontSize: 18,
+    color: '#004785',
   },
   fullScreenChatView: {
     flex: 1,
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 20,
-    marginTop: 40, // Increase margin top for spacing
+    marginTop: 40,
   },
   chatMessages: {
     flex: 1,
@@ -188,23 +218,41 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    padding: 15, // Increased padding for better touch experience
+    padding: 15,
     marginRight: 10,
-    height: 50, // Increased height for the input
+    height: 50,
   },
   userMessage: {
-    alignSelf: 'flex-end',
     backgroundColor: '#a0e1a0',
     borderRadius: 5,
     padding: 10,
     marginVertical: 2,
+    maxWidth: '70%',
   },
   aiMessage: {
-    alignSelf: 'flex-start',
     backgroundColor: '#e1e1e1',
     borderRadius: 5,
     padding: 10,
     marginVertical: 2,
+    maxWidth: '70%',
+  },
+  messageContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  userContainer: {
+    alignItems: 'flex-end',
+    flexDirection: 'row-reverse', // This makes user messages align on the right side
+  },
+  aiContainer: {
+    alignItems: 'flex-start',
+    flexDirection: 'row', // AI messages align on the left side
   },
   fullScreenOverlay: {
     flex: 1,
