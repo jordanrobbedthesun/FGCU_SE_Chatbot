@@ -16,12 +16,12 @@ const postChatbot = async (req, res) => {
           method: 'POST',
           url: 'https://custom-chatbot-api.p.rapidapi.com/chatbotapi',
           headers: {
-               'x-rapidapi-key': 'ff762d5a2fmsh06af197dc30343dp1fe482jsn3354cefce363',
-               'x-rapidapi-host': 'custom-chatbot-api.p.rapidapi.com',
+               'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+               'x-rapidapi-host': process.env.RAPIDAPI_HOST,
                'Content-Type': 'application/json'
           },
           data: {
-               bot_id: 'OEXJ8qFp5E5AwRwymfPts90vrHnmr8yZgNE171101852010w2S0bCtN3THp448W7kDSfyTf3OpW5TUVefz',
+               bot_id: process.env.BOT_ID,
                messages: [
                     {
                          role: 'user',
