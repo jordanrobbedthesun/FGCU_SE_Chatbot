@@ -27,6 +27,26 @@ const FullScreenChatView = ({ messages, inputValue, setInputValue, sendMessage }
 
   return (
     <View style={styles.fullScreenChatView}>
+
+      <Text style={styles.caleb}>Caleb Photo Collage :D</Text>
+      <View style={styles.imageRow}>
+        <Image
+          source={require('../../assets/images/cabes.png')}
+          style={styles.caleb}
+        />
+        <Image
+          source={require('../../assets/images/standingCaleb.png')}
+          style={styles.caleb}
+        />
+        <Image
+          source={require('../../assets/images/calebIQ.png')}
+          style={styles.caleb}
+        />
+        <Image
+          source={require('../../assets/images/hotCaleb.png')}
+          style={styles.caleb}
+        />
+      </View>
       <ScrollView style={styles.chatMessages} keyboardShouldPersistTaps="handled">
         {messages.length === 0 ? (
           <Text style={styles.noMessagesText}>No messages yet. Start chatting!</Text>
@@ -58,6 +78,7 @@ const FullScreenChatView = ({ messages, inputValue, setInputValue, sendMessage }
           ))
         )}
       </ScrollView>
+      
 
       <View style={styles.messageInputContainer}>
         <TextInput
@@ -257,6 +278,18 @@ const styles = StyleSheet.create({
   fullScreenOverlay: {
     flex: 1,
   },
+  imageRow: {
+    flexDirection: 'row',  // Align children horizontally
+    justifyContent: 'center', // Add spacing between images (or use 'center')
+    alignItems: 'center',  // Vertically align the images
+    marginVertical: 10,    // Optional margin for spacing above and below
+  },
+  caleb: {
+    width: 100,            // Set a fixed width for images
+    height: 100,           // Set a fixed height for images
+    marginHorizontal: 5,   // Add space between the images
+  },
+
 });
 
 export default HomeView;
