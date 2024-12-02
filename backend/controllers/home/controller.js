@@ -39,7 +39,6 @@ const postChatbot = async (req, res) => {
 
      try {
           const response = await axios.request(options);
-          console.log(response.data);
           res.json({
                advice: response.data, // Send the API response back to the client
           });
