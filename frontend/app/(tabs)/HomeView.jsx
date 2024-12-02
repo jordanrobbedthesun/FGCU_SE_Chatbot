@@ -93,13 +93,13 @@ const HomeView = () => {
       <View style={styles.messageInputContainer}>
         <TextInput
           style={styles.messageInput}
-          placeholder="Ask me a question about finance..."
+          placeholder="Ask me a question about FGCU SE/CS..."
           placeholderTextColor="#666"
           value={inputValue}
           onChangeText={setInputValue}
           onSubmitEditing={sendMessage} // Send message on enter key press
         />
-        <Button title="Send" color="#FF4500" onPress={sendMessage} />
+        <Button title="Send" color="#004785" onPress={sendMessage} />
       </View>
     </View>
   );
@@ -108,7 +108,7 @@ const HomeView = () => {
     <View style={styles.container}>
       <View style={styles.hero}>
         <Text style={styles.aiHeader}>FGCU SE Chatbot</Text>
-        <Text style={styles.aiSubHeader}>Your Personal Financial Advisor</Text>
+        <Text style={styles.aiSubHeader}>Your Personal Academic Advisor</Text>
       </View>
       {!isChatExpanded ? (
         <ChatBox />
@@ -124,7 +124,7 @@ const HomeView = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FF4500', // Classic orange background
+    backgroundColor: '#004785', // Classic blue background
     padding: 20,
   },
   hero: {

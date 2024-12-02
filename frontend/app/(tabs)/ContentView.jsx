@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import HomeView from './HomeView';
-import SettingsView from './SettingsView';
-import AnalyticsView from './AnalyticsView';
-import LearnView from './LearnView';
-import MoreView from './MoreView';
 import CustomTabBar from './CustomTabBar';
 
 const ContentView = () => {
@@ -14,16 +10,6 @@ const ContentView = () => {
   const renderView = () => {
     switch (selectedTab) {
       case 0:
-        return <SettingsView />;
-      case 1:
-        return <AnalyticsView />;
-      case 2:
-        return <HomeView />;
-      case 3:
-        return <LearnView />;
-      case 4:
-        return <MoreView />;
-      default:
         return <HomeView />;
     }
   };

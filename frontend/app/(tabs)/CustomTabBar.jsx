@@ -15,9 +15,9 @@ const CustomTabBar = ({ selectedTab, setSelectedTab }) => {
                     <Ionicons
                         name={tabIcon(index)}
                         size={20}
-                        color={selectedTab === index ? 'orange' : 'gray'}
+                        color={selectedTab === index ? 'blue' : 'gray'}
                     />
-                    <Text style={{ color: selectedTab === index ? 'orange' : 'gray' }}>
+                    <Text style={{ color: selectedTab === index ? 'blue' : 'gray' }}>
                         {tabTitle(index)}
                     </Text>
                 </TouchableOpacity>
@@ -28,22 +28,14 @@ const CustomTabBar = ({ selectedTab, setSelectedTab }) => {
 
 const tabTitle = (index) => {
     switch (index) {
-        case 0: return 'Settings';
-        case 1: return 'Analytics';
-        case 2: return 'Home';
-        case 3: return 'Learn';
-        case 4: return 'More';
+        case 0: return 'Home';
         default: return '';
     }
 };
 
 const tabIcon = (index) => {
     switch (index) {
-        case 0: return 'settings';
-        case 1: return 'pie-chart-outline'; // Ensure valid icon name
-        case 2: return 'home';
-        case 3: return 'book-outline'; // Ensure valid icon name
-        case 4: return 'ellipsis-horizontal-outline'; // Ensure valid icon name
+        case 0: return 'home';
         default: return '';
     }
 };
