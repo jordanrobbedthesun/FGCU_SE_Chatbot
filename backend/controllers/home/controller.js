@@ -5,43 +5,50 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const getHome = (req, res) => {
-     res.send('Welcome to the home route');
      res.send('Welcome to the FGCU SE Chatbot');
 };
 
 const postChatbot = async (req, res) => {
-     const { stockSymbol, userMessage } = req.body; // Accept stock symbol and user message from the request body
+
+     const { userMessage } = req.body;
 
      const options = {
           method: 'POST',
-          url: 'https://yahoo-finance160.p.rapidapi.com/finbot',
+          url: 'https://custom-chatbot-api.p.rapidapi.com/chatbotapi',
           headers: {
-               'x-rapidapi-key': process.env.OPENAI_API_KEY, // Use API key from .env
-               'x-rapidapi-host': 'yahoo-finance160.p.rapidapi.com',
-               'Content-Type': 'application/json',
+               'x-rapidapi-key': 'ff762d5a2fmsh06af197dc30343dp1fe482jsn3354cefce363',
+               'x-rapidapi-host': 'custom-chatbot-api.p.rapidapi.com',
+               'Content-Type': 'application/json'
           },
           data: {
+               bot_id: 'OEXJ8qFp5E5AwRwymfPts90vrHnmr8yZgNE171101852010w2S0bCtN3THp448W7kDSfyTf3OpW5TUVefz',
                messages: [
                     {
                          role: 'user',
-                         content: userMessage + "Maximum 50 words, minimum 10 words, give good information and go in detail", // Use the user's message dynamically
-                    },
+                         content: userMessage
+                    }
                ],
-               stock: stockSymbol, // Use the stock symbol dynamically
-               conversation_id: '', // Empty for a new conversation
-               period: '1mo', // You can modify this period if needed
-          },
+               user_id: '',
+               temperature: 0.9,
+               top_k: 5,
+               top_p: 0.9,
+               max_tokens: 256,
+               model: 'gpt 3.5'
+          }
      };
 
      try {
           const response = await axios.request(options);
+          console.log(response.data);
           res.json({
                advice: response.data, // Send the API response back to the client
           });
      } catch (error) {
           console.error(error);
-          res.status(500).json({ error: 'Failed to fetch financial advice' });
+          res.status(500).json({ error: 'Failed to fetch chatbot message' });
      }
+
+
 };
 
 module.exports = {
