@@ -28,7 +28,7 @@ const FullScreenChatView = ({ messages, inputValue, setInputValue, sendMessage }
   return (
     <View style={styles.fullScreenChatView}>
 
-      <Text style={styles.caleb}>Caleb Photo Collage :D</Text>
+      <Text style={styles.title}>Caleb Photo Collage :D</Text>
       <View style={styles.imageRow}>
         <Image
           source={require('../../assets/images/cabes.png')}
@@ -44,6 +44,18 @@ const FullScreenChatView = ({ messages, inputValue, setInputValue, sendMessage }
         />
         <Image
           source={require('../../assets/images/hotCaleb.png')}
+          style={styles.caleb}
+        />
+        <Image
+          source={require('../../assets/images/grandpaCaleb.png')}
+          style={styles.caleb}
+        />
+        <Image
+          source={require('../../assets/images/chad.png')}
+          style={styles.caleb}
+        />
+        <Image
+          source={require('../../assets/images/daddyCaleb.png')}
           style={styles.caleb}
         />
       </View>
@@ -283,6 +295,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center', // Add spacing between images (or use 'center')
     alignItems: 'center',  // Vertically align the images
     marginVertical: 10,    // Optional margin for spacing above and below
+    backgroundColor: '#e1e1e1',
+    padding: 20,
+    marginLeft: 30,
+    marginRight: 30,
+    borderRadius: 20,
+    justifyContent: 'space-around'
   },
   caleb: {
     width: 100,            // Set a fixed width for images
