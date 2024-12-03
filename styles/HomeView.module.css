@@ -1,58 +1,78 @@
+/* General container settings for responsiveness */
 .container {
     display: flex;
-    flex: 1;
+    flex-direction: column;
     background-color: #004785;
     padding: 20px;
-    flex-direction: column;
     height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* Prevent overflow */
 }
 
+/* Hero Section */
 .hero {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 .aiHeader {
-    font-size: 30px;
+    font-size: 2rem;
     font-weight: bold;
     color: white;
+    margin: 0;
 }
 
 .aiSubHeader {
-    font-size: 16px;
+    font-size: 1rem;
     color: white;
+    margin: 0;
 }
 
+/* Chatbot container */
 .chatbotContainer {
     display: flex;
     align-items: center;
     margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 .chatButton {
     background-color: #004785;
     padding: 10px 20px;
     color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
+/* Fullscreen chat view */
 .fullScreenChatView {
     display: flex;
-    flex: 1;
     flex-direction: column;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
-    margin-top: 40px;
+    margin-top: 20px;
+    overflow-y: auto;
+    max-height: 80vh;
+    /* Prevents overflow */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Chat messages */
 .chatMessages {
     display: flex;
-    flex: 1;
     flex-direction: column;
     margin-bottom: 10px;
+    gap: 8px;
+    overflow-y: auto;
+    max-height: 100%;
 }
 
 .noMessagesText {
@@ -61,100 +81,132 @@
     color: black;
 }
 
+/* Message input container */
 .messageInputContainer {
     display: flex;
-    flex-direction: row;
     align-items: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .messageInput {
     flex: 1;
-    color: black;
-    border-width: 1px;
-    border-color: #ccc;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 15px;
-    margin-right: 10px;
+    padding: 10px;
+    font-size: 1rem;
     height: 50px;
+    box-sizing: border-box;
 }
 
 .messageInput::placeholder {
     color: #666;
 }
 
+.chatButton {
+    flex-shrink: 0;
+    font-size: 1rem;
+}
+
+/* Messages styling */
+.userMessage,
+.aiMessage {
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    /* Prevents overflow in long words */
+    box-sizing: border-box;
+}
+
 .userMessage {
     background-color: #a0e1a0;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 2px 0;
-    max-width: 70%;
+    align-self: flex-end;
 }
 
 .aiMessage {
     background-color: #e1e1e1;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 2px 0;
-    max-width: 70%;
+    align-self: flex-start;
 }
 
+/* Message container */
 .messageContainer {
     display: flex;
-    flex-direction: row;
-    margin-bottom: 10px;
+    align-items: flex-start;
+    gap: 10px;
 }
 
 .avatar {
     width: 40px;
     height: 40px;
-    border-radius: 20px;
-    margin-right: 10px;
+    border-radius: 50%;
 }
 
+/* User and AI alignment */
 .userContainer {
-    display: flex;
-    align-items: flex-end;
-    flex-direction: row-reverse; /* User messages are on the right */
+    flex-direction: row-reverse;
 }
 
 .aiContainer {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: row; /* AI messages are on the left */
+    flex-direction: row;
 }
 
-.fullScreenOverlay {
-    display: flex;
-    flex: 1;
-}
-
+/* Bounce animation */
 .bounce {
     animation: bounce 2s infinite;
 }
 
 @keyframes bounce {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-5px);
     }
 }
 
+/* Image row */
 .imageRow {
-    display: flex; /* Align children horizontally */
-    flex-direction: row; /* Align children horizontally */
-    justify-content: space-around; /* Add spacing between images */
-    align-items: center; /* Vertically align the images */
-    margin: 10px 30px; /* Optional margin for spacing above and below */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
     background-color: #e1e1e1;
     padding: 20px;
     border-radius: 20px;
+    overflow-x: auto;
 }
 
 .caleb {
-    width: 100px; /* Set a fixed width for images */
-    height: 100px; /* Set a fixed height for images */
-    margin: 0 5px; /* Add space between the images */
-    object-fit: cover; /* Ensure the image covers the entire space */
+    width: 100px;
+    height: 100px;
+    margin: 0 5px;
+    object-fit: cover;
+}
+
+/* Responsive settings */
+@media (max-width: 768px) {
+    .aiHeader {
+        font-size: 1.5rem;
+    }
+
+    .aiSubHeader {
+        font-size: 0.9rem;
+    }
+
+    .fullScreenChatView {
+        margin-top: 10px;
+    }
+
+    .messageInput {
+        font-size: 0.9rem;
+    }
+
+    .chatButton {
+        font-size: 0.9rem;
+    }
 }

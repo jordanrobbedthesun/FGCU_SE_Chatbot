@@ -130,6 +130,12 @@ function FullScreenChatView({ messages, inputValue, setInputValue, sendMessage }
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onSubmit={sendMessage}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent the default behavior of the Enter key
+                sendMessage();
+              }
+            }}
           />
             <button
               className="bg-fgcu px-4 py-2 text-white rounded"
