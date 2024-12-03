@@ -40,6 +40,51 @@ function FullScreenChatView({ messages, inputValue, setInputValue, sendMessage }
   return (
     <>
       <div className={styles.fullScreenChatView}>
+        <h2 className={styles.title}>Caleb Photo Collage :D</h2>
+        <div className={styles.imageRow}>
+          <Image
+            src="/images/cabes.png"
+            alt="Caleb"
+            width={100} height={100}
+            className={styles.caleb}
+          />
+          <Image
+            src="/images/standingCaleb.png"
+            alt="Standing Caleb"
+            width={100} height={100}
+            className={styles.caleb}
+          />
+          <Image
+            src="/images/calebIQ.png"
+            alt="Caleb IQ"
+            width={100} height={100}
+            className={styles.caleb}
+          />
+          <Image
+            src="/images/hotCaleb.png"
+            alt="Hot Caleb"
+            width={100} height={100}
+            className={styles.caleb}
+          />
+          <Image
+            src="/images/grandpaCaleb.png"
+            alt="Grandpa Caleb"
+            width={100} height={100}
+            className={styles.caleb}
+          />
+          <Image
+            src="/images/cakeCabes.png"
+            alt="Cake Caleb"
+            width={100} height={100}
+            className={styles.caleb}
+          />
+          <Image
+            src="/images/daddyCaleb.png"
+            alt="Daddy Caleb"
+            width={100} height={100}
+            className={styles.caleb}
+          />
+        </div>
         <div className={styles.chatMessages}>
           {messages.length === 0 ? (
             <p className={styles.noMessagesText}>No messages yet. Start chatting!</p>
