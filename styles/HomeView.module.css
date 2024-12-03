@@ -114,13 +114,13 @@
 .userContainer {
     display: flex;
     align-items: flex-end;
-    flex-direction: row-reverse;
+    flex-direction: row-reverse; /* User messages are on the right */
 }
 
 .aiContainer {
     display: flex;
     align-items: flex-start;
-    flex-direction: row;
+    flex-direction: row; /* AI messages are on the left */
 }
 
 .fullScreenOverlay {

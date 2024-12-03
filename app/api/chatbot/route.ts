@@ -9,6 +9,7 @@ interface CSVRow {
     [key: string]: string;
 }
 
+// TODO: this should be a JSON for better performance
 const loadCSVData = (): Promise<void> => {
     return new Promise((resolve, reject) => {
         const data: CSVRow[] = [];
@@ -72,9 +73,12 @@ export async function POST(req: NextRequest) {
         }),
     };
 
+    let data;
+
     try {
         const response = await fetch('https://custom-chatbot-api.p.rapidapi.com/chatbotapi', options);
-        const data = await response.json();
+        data = await response.json();
+        if (!response.ok) throw new Error(data);
         responseMessage = data; // Send the API response back to the client
     } catch (error) {
         console.error(error);
