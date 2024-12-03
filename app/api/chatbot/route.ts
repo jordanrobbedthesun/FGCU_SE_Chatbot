@@ -28,16 +28,17 @@ export async function POST(req: NextRequest) {
     };
 
     let botResponse = { advice: { result: '' } };
+    let data;
 
     try {
         const response = await fetch('https://custom-chatbot-api.p.rapidapi.com/chatbotapi', options);
-        const data = await response.json();
+        data = await response.json();
 
-        console.log(data);
-
+        
         // Update the bot response with the relevant API response data
         botResponse.advice.result = data.result;
     } catch (error) {
+        console.log(data);
         console.error(error);
         botResponse.advice.result = 'Failed to fetch chatbot message';
     }
