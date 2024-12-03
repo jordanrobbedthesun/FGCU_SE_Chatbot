@@ -1,0 +1,160 @@
+.container {
+    display: flex;
+    flex: 1;
+    background-color: #004785;
+    padding: 20px;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.hero {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.aiHeader {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+}
+
+.aiSubHeader {
+    font-size: 16px;
+    color: white;
+}
+
+.chatbotContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.chatButton {
+    background-color: #004785;
+    padding: 10px 20px;
+    color: white;
+}
+
+.fullScreenChatView {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+.chatMessages {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.noMessagesText {
+    text-align: center;
+    font-style: italic;
+    color: black;
+}
+
+.messageInputContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.messageInput {
+    flex: 1;
+    color: black;
+    border-width: 1px;
+    border-color: #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin-right: 10px;
+    height: 50px;
+}
+
+.messageInput::placeholder {
+    color: #666;
+}
+
+.userMessage {
+    background-color: #a0e1a0;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 2px 0;
+    max-width: 70%;
+}
+
+.aiMessage {
+    background-color: #e1e1e1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 2px 0;
+    max-width: 70%;
+}
+
+.messageContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.userContainer {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row-reverse; /* User messages are on the right */
+}
+
+.aiContainer {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row; /* AI messages are on the left */
+}
+
+.fullScreenOverlay {
+    display: flex;
+    flex: 1;
+}
+
+.bounce {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.imageRow {
+    display: flex; /* Align children horizontally */
+    flex-direction: row; /* Align children horizontally */
+    justify-content: space-around; /* Add spacing between images */
+    align-items: center; /* Vertically align the images */
+    margin: 10px 30px; /* Optional margin for spacing above and below */
+    background-color: #e1e1e1;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.caleb {
+    width: 100px; /* Set a fixed width for images */
+    height: 100px; /* Set a fixed height for images */
+    margin: 0 5px; /* Add space between the images */
+    object-fit: cover; /* Ensure the image covers the entire space */
+}
