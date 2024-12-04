@@ -59,20 +59,41 @@
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
-    overflow-y: auto;
     max-height: 80vh;
-    /* Prevents overflow */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    /* Prevent overflowing the container */
 }
 
 /* Chat messages */
 .chatMessages {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    /* Allows this section to take up available space */
     margin-bottom: 10px;
     gap: 8px;
     overflow-y: auto;
-    max-height: 100%;
+    /* Enables vertical scrolling */
+    max-height: calc(80vh - 120px);
+    /* Dynamically adjust height */
+    scroll-behavior: smooth;
+    /* Smooth scrolling */
+    padding-right: 10px;
+    /* Space for the scrollbar */
+}
+
+.chatMessages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chatMessages::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 5px;
+}
+
+.chatMessages::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
 }
 
 .noMessagesText {
