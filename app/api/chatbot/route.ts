@@ -10,6 +10,7 @@ interface CSVRow {
 }
 
 // TODO: this should be a JSON for better performance
+/*
 const loadCSVData = (): Promise<void> => {
     return new Promise((resolve, reject) => {
         const data: CSVRow[] = [];
@@ -30,20 +31,24 @@ const loadCSVData = (): Promise<void> => {
     });
 };
 
+
 // Ensure the CSV data is loaded before handling requests
 if (!dataLoaded) {
     loadCSVData().catch((err) => {
         console.error('Error loading CSV data:', err);
     });
 }
+*/
 
 export async function POST(req: NextRequest) {
     const { userMessage } = await req.json();
 
+    /*
     // Ensure the CSV data is loaded before processing messages
     if (fgcuData.length === 0) {
         return NextResponse.json({ error: 'FGCU data is still loading, please try again later.' }, { status: 500 });
     }
+    */
 
     // Initialize response message
     let responseMessage = "I couldn't understand your request. Can you please clarify?";
